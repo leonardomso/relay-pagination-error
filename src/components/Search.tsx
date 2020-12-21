@@ -21,7 +21,6 @@ const Search = () => {
 
   const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
-    loadQuery({ podcastName: e.target.value });
   };
 
   const [queryReference, loadQuery] = useQueryLoader<SearchQuery>(searchQuery);

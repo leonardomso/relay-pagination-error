@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import graphql from "babel-plugin-relay/macro";
 import { GraphQLTaggedNode } from "react-relay";
 import {
@@ -53,7 +53,7 @@ const SearchPodcast = ({
 }: Props) => {
   const query = usePreloadedQuery<SearchQuery>(searchQuery, queryReference);
 
-  const { data, loadNext, isLoadingNext, refetch } = usePaginationFragment<
+  const { data, loadNext, isLoadingNext } = usePaginationFragment<
     SearchPodcastPaginationQuery,
     SearchPodcast_podcasts$key
   >(fragment, query);
