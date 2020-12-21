@@ -44,14 +44,12 @@ interface Props {
   searchQuery: GraphQLTaggedNode;
   queryReference: PreloadedQuery<SearchQuery>;
   shouldLoadMore: boolean;
-  search: string;
 }
 
 const SearchPodcast = ({
   searchQuery,
   queryReference,
   shouldLoadMore,
-  search
 }: Props) => {
   const query = usePreloadedQuery<SearchQuery>(searchQuery, queryReference);
 
@@ -67,10 +65,7 @@ const SearchPodcast = ({
 
   if (shouldLoadMore === true) loadMore();
 
-  useEffect(() => {
-    refetch({ podcastName: search });
-  }, [search, refetch]);
-
+  console.log('query: ', query);
   console.log('data: ', data);
 
   return (

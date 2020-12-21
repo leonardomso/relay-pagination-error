@@ -26,9 +26,13 @@ const Search = () => {
 
   const [queryReference, loadQuery] = useQueryLoader<SearchQuery>(searchQuery);
 
+  const [startTransition] = React.unstable_useTransition({ timeoutMs: 1550 } as any);
+
   useEffect(() => {
-    loadQuery({ podcastName: "" });
-  }, [loadQuery]);
+    startTransition(() => {
+      loadQuery({ podcastName: debouncedSearch });
+    });
+  }, [loadQuery, startTransition, debouncedSearch]);
 
   return (
     <div>
@@ -39,7 +43,6 @@ const Search = () => {
             searchQuery={searchQuery}
             queryReference={queryReference}
             shouldLoadMore={shouldLoadMore}
-            search={debouncedSearch}
           />
         </Suspense>
       )}

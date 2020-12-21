@@ -1,14 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { unstable_createRoot } from 'react-dom';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
+unstable_createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
