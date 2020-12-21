@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, ChangeEvent } from "react";
 import graphql from "babel-plugin-relay/macro";
 import { useQueryLoader } from "react-relay/hooks";
+import { useDebounce } from "use-debounce";
 
 import SearchPodcast from "./SearchPodcast";
 
@@ -14,28 +15,20 @@ const searchQuery = graphql`
 
 const Search = () => {
   const [search, setSearch] = useState<string>("");
-  const [shouldLoadMore, setShouldLoadMore] = useState<boolean>(false);
+  const [debouncedSearch] = useDebounce(search, 500);
+
+  const [shouldLoadMore] = useState<boolean>(false);
 
   const onSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
+    loadQuery({ podcastName: e.target.value });
   };
 
-  const onLoadMore = (value: any) => {
-    if (value.top === 1) {
-      setShouldLoadMore(true);
-    }
-    setShouldLoadMore(false);
-  };
-
-  const [queryReference, loadQuery, disposeQuery] = useQueryLoader<SearchQuery>(searchQuery);
+  const [queryReference, loadQuery] = useQueryLoader<SearchQuery>(searchQuery);
 
   useEffect(() => {
-    loadQuery({ podcastName: search });
-
-    return () => {
-      disposeQuery();
-    };
-  }, [loadQuery, disposeQuery, search]);
+    loadQuery({ podcastName: "" });
+  }, [loadQuery]);
 
   return (
     <div>
@@ -46,6 +39,7 @@ const Search = () => {
             searchQuery={searchQuery}
             queryReference={queryReference}
             shouldLoadMore={shouldLoadMore}
+            search={debouncedSearch}
           />
         </Suspense>
       )}

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import graphql from "babel-plugin-relay/macro";
 import { GraphQLTaggedNode } from "react-relay";
 import {
@@ -28,7 +28,7 @@ const fragment = graphql`
       first: $first
       before: $before
       last: $last
-    ) @connection(key: "SearchPodcast_podcastsByName", filters: ["podcastName"]) {
+    ) @connection(key: "SearchPodcast_podcastsByName") {
       edges {
         node {
           id
@@ -44,16 +44,18 @@ interface Props {
   searchQuery: GraphQLTaggedNode;
   queryReference: PreloadedQuery<SearchQuery>;
   shouldLoadMore: boolean;
+  search: string;
 }
 
 const SearchPodcast = ({
   searchQuery,
   queryReference,
   shouldLoadMore,
+  search
 }: Props) => {
   const query = usePreloadedQuery<SearchQuery>(searchQuery, queryReference);
 
-  const { data, loadNext, isLoadingNext } = usePaginationFragment<
+  const { data, loadNext, isLoadingNext, refetch } = usePaginationFragment<
     SearchPodcastPaginationQuery,
     SearchPodcast_podcasts$key
   >(fragment, query);
@@ -65,8 +67,11 @@ const SearchPodcast = ({
 
   if (shouldLoadMore === true) loadMore();
 
-  console.log("query: ", query);
-  console.log("data: ", data);
+  useEffect(() => {
+    refetch({ podcastName: search });
+  }, [search, refetch]);
+
+  console.log('data: ', data);
 
   return (
     <div>
