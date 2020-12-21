@@ -2,25 +2,29 @@
   "name": "relay-pagination-error",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "SKIP_PREFLIGHT_CHECK=true react-scripts start",
+    "build": "SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "test": "SKIP_PREFLIGHT_CHECK=true react-scripts test",
+    "eject": "SKIP_PREFLIGHT_CHECK=true react-scripts eject",
+    "relay": "relay-compiler --src ./src --schema ./schema/schema.graphql --language typescript"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.53",
-    "@types/react-dom": "^16.9.8",
+    "@types/jest": "^26.0.19",
+    "@types/node": "^14.14.14",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "babel-plugin-relay": "^10.1.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-relay": "^0.0.0-experimental-0b967d2e",
     "react-scripts": "4.0.1",
+    "relay-hooks": "^4.0.0-rc.1",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +43,14 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "^0.0.35",
+    "@types/react-relay": "^7.0.17",
+    "@types/relay-runtime": "^10.1.5",
+    "graphql": "^15.4.0",
+    "relay-compiler": "^10.1.2",
+    "relay-compiler-language-typescript": "^13.0.2",
+    "relay-config": "^10.1.2"
   }
 }
